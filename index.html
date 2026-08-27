@@ -141,8 +141,11 @@ $ curl "http://127.0.0.1:8787/api/signals?company=OpenAI&limit=5"<br>
     <h3>联系试用</h3>
     <p class="sub">当日搭建，明天早上看到第一批信号</p>
     <p style="text-align:center;margin:10px 0">
-      <a class="btn btn-primary" href="mailto:john@jiangzhang.ca?subject=信号API试用咨询">📧 发邮件联系</a>
+      <button type="button" class="btn btn-primary" onclick="copyEmail(this)">📋 复制邮箱（john@jiangzhang.ca）</button>
       <a class="btn btn-ghost" href="#lead-form">📝 填写意向单（更快）</a>
+    </p>
+    <p style="text-align:center;color:var(--muted);font-size:13px;margin:0 0 6px">
+      邮箱：<b style="color:var(--blue)">john@jiangzhang.ca</b>（点击上方按钮一键复制）
     </p>
     <form class="lead" id="lead-form" onsubmit="return submitLead(event)">
       <label>称呼（可选）</label>
@@ -183,6 +186,23 @@ const FORMSPREE_ENDPOINT = ""; // 例如 "https://formspree.io/f/abcdwxyz"
 const CONTACT_EMAIL = "john@jiangzhang.ca";
 
 function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+function copyEmail(btn) {
+  const email = CONTACT_EMAIL;
+  let ok = false;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(email).then(() => { ok = true; }).catch(() => {});
+  }
+  if (!ok) {
+    const ta = document.createElement("textarea");
+    ta.value = email; document.body.appendChild(ta); ta.select();
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+  const old = btn.textContent;
+  btn.textContent = ok ? "✅ 邮箱已复制，去发邮件吧！" : "复制失败，请手动选中邮箱复制";
+  setTimeout(() => { btn.textContent = old; }, 2500);
+}
 
 function submitLead(e) {
   e.preventDefault();
