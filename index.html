@@ -182,6 +182,8 @@ $ curl "http://127.0.0.1:8787/api/signals?company=OpenAI&limit=5"<br>
 const FORMSPREE_ENDPOINT = ""; // 例如 "https://formspree.io/f/abcdwxyz"
 const CONTACT_EMAIL = "john@jiangzhang.ca";
 
+function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
 function submitLead(e) {
   e.preventDefault();
   const name = document.getElementById("f-name").value.trim();
@@ -191,7 +193,8 @@ function submitLead(e) {
   const note = document.getElementById("f-note").value.trim();
   const msg = document.getElementById("f-msg");
   if (!contact) { msg.className = "form-msg err"; msg.textContent = "请填写联系方式（微信或邮箱）"; return false; }
-  const body = "称呼: " + (name || "未填写") +
+  const text = "信号 API 试用咨询\n" +
+    "称呼: " + (name || "未填写") +
     "\n需要的版本: " + plan +
     "\n交付形态: " + form +
     "\n联系方式: " + contact +
@@ -203,16 +206,40 @@ function submitLead(e) {
       body: JSON.stringify({ name, plan, form, contact, note })
     }).then(r => {
       if (r.ok) { msg.className = "form-msg ok"; msg.textContent = "✅ 已提交！我会尽快联系你。"; }
-      else { msg.className = "form-msg err"; msg.textContent = "提交失败，请改用邮件联系。"; }
+      else { msg.className = "form-msg err"; msg.textContent = "提交失败，请复制下方内容发送到 " + CONTACT_EMAIL + "："; showCopy(msg, text); }
     }).catch(() => {
-      msg.className = "form-msg err"; msg.textContent = "网络异常，请改用邮件联系。";
+      msg.className = "form-msg err"; msg.textContent = "网络异常，请复制下方内容发送到 " + CONTACT_EMAIL + "："; showCopy(msg, text);
     });
   } else {
-    const subject = encodeURIComponent("信号API试用咨询" + (name ? " - " + name : ""));
-    window.location.href = "mailto:" + CONTACT_EMAIL + "?subject=" + subject + "&body=" + encodeURIComponent(body);
-    msg.className = "form-msg ok"; msg.textContent = "📧 已打开邮件客户端，内容已填好，点「发送」即可。";
+    msg.className = "form-msg ok";
+    msg.innerHTML = "✅ 意向单已生成！请复制下方内容，发送到邮箱 <b>" + esc(CONTACT_EMAIL) + "</b>（或直接加微信告知）：";
+    showCopy(msg, text);
   }
   return false;
+}
+
+function showCopy(msg, text) {
+  const area = document.createElement("textarea");
+  area.value = text;
+  area.readOnly = true;
+  area.style.cssText = "width:100%;min-height:110px;margin-top:10px;font-size:13px;font-family:inherit;padding:8px;border:1px solid var(--line);border-radius:6px;";
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.textContent = "📋 一键复制";
+  btn.style.cssText = "margin-top:8px;padding:8px 18px;background:var(--blue);color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;";
+  btn.onclick = () => {
+    area.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => { ok = true; }).catch(() => {});
+    }
+    btn.textContent = ok ? "✅ 已复制" : "复制失败，请手动选中复制";
+    setTimeout(() => { btn.textContent = "📋 一键复制"; }, 2000);
+  };
+  msg.appendChild(area);
+  msg.appendChild(document.createElement("br"));
+  msg.appendChild(btn);
 }
 </script>
 </body>
