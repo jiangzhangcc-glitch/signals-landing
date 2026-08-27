@@ -126,8 +126,30 @@
       <tr><td>支持</td><td>邮件答疑</td><td class="hot">邮件 + 配置协助</td><td>专属对接</td></tr>
     </table>
     <p style="margin-top:18px;text-align:center">
-      <a class="btn btn-primary" href="#contact">付款</a>
+      <a class="btn btn-primary" href="javascript:void(0)" onclick="document.getElementById('pay-panel').style.display='block';this.style.display='none'">付款</a>
     </p>
+    <div id="pay-panel" style="display:none;max-width:560px;margin:16px auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px">
+      <h4 style="margin:0 0 6px;font-size:16px">💰 付款方式</h4>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 16px">付款后请发邮件告知：john@jiangzhang.ca（注明版本与邮箱，当日交付）</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div style="flex:1;min-width:150px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:12px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:8px">微信支付（国内）</div>
+          <div style="font-size:24px">🟢</div>
+          <div id="pay-wechat" style="color:var(--muted);font-size:12px;margin-top:6px">待插入收款码</div>
+        </div>
+        <div style="flex:1;min-width:150px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:12px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:8px">支付宝（国内）</div>
+          <div style="font-size:24px">🔵</div>
+          <div id="pay-alipay" style="color:var(--muted);font-size:12px;margin-top:6px">待插入收款码</div>
+        </div>
+        <div style="flex:1;min-width:150px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:12px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:8px">海外付款</div>
+          <div style="font-size:24px">💳</div>
+          <div style="color:var(--muted);font-size:12px;margin-top:6px">Credit / Master / Debit / PayPal</div>
+          <a id="pay-overseas" href="#" style="color:var(--blue);font-size:13px;font-weight:600">待插入付款链接</a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <div class="foot">
