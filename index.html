@@ -38,12 +38,6 @@
   .hot { background:#fff8c5; }
   .demo { background:#0d1117; color:#c9d1d9; border-radius:8px; padding:16px 18px; font-family:Consolas,monospace; font-size:13px; overflow:auto; }
   .demo .cm { color:#8b949e; }
-  form.lead { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:22px 24px; max-width:560px; margin:18px auto; text-align:left; }
-  form.lead label { display:block; font-size:13px; color:var(--muted); margin:12px 0 4px; }
-  form.lead input, form.lead select, form.lead textarea { width:100%; padding:8px 10px; border:1px solid var(--line); border-radius:6px; font-size:14px; font-family:inherit; }
-  form.lead textarea { min-height:64px; resize:vertical; }
-  .form-msg { font-size:13px; margin-top:10px; min-height:18px; }
-  .form-msg.ok { color:var(--green); } .form-msg.err { color:#cf222e; }
   .foot { border-top:1px solid var(--line); padding:26px 0 40px; color:var(--muted); font-size:12px; text-align:center; }
   @media (max-width:760px) { .grid,.grid2,.grid3 { grid-template-columns:1fr; } .hero h2 { font-size:26px; } }
 </style>
@@ -139,38 +133,12 @@ $ curl "http://127.0.0.1:8787/api/signals?company=OpenAI&limit=5"<br>
 
   <section id="contact">
     <h3>联系试用</h3>
-    <p class="sub">当日搭建，明天早上看到第一批信号</p>
-    <p style="text-align:center;margin:10px 0">
-      <button type="button" class="btn btn-primary" onclick="copyEmail(this)">📋 复制邮箱（john@jiangzhang.ca）</button>
-      <a class="btn btn-ghost" href="#lead-form">📝 填写意向单（更快）</a>
-    </p>
-    <p style="text-align:center;color:var(--muted);font-size:13px;margin:0 0 6px">
-      邮箱：<b style="color:var(--blue)">john@jiangzhang.ca</b>（点击上方按钮一键复制）
-    </p>
-    <form class="lead" id="lead-form" onsubmit="return submitLead(event)">
-      <label>称呼（可选）</label>
-      <input type="text" id="f-name" placeholder="怎么称呼你">
-      <label>需要的版本</label>
-      <select id="f-plan">
-        <option value="试用版 ¥99/月">试用版 ¥99/月</option>
-        <option value="标准版 ¥199/月">标准版 ¥199/月</option>
-        <option value="数据包 ¥1999（一次性）">数据包 ¥1999（一次性）</option>
-        <option value="年度 ¥9999">年度 ¥9999</option>
-        <option value="还没想好，先了解">还没想好，先了解</option>
-      </select>
-      <label>交付形态</label>
-      <select id="f-form">
-        <option value="本地部署（数据在自己机器）">本地部署（数据在自己机器）</option>
-        <option value="托管服务（你给我接口地址）">托管服务（你给我接口地址）</option>
-        <option value="一次性数据包">一次性数据包</option>
-      </select>
-      <label>你的联系方式（微信 / 邮箱）</label>
-      <input type="text" id="f-contact" placeholder="微信号或邮箱" required>
-      <label>备注（可选）</label>
-      <textarea id="f-note" placeholder="想重点看哪些公司/主题？"></textarea>
-      <button type="submit" style="margin-top:16px;width:100%;padding:11px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer">提交意向单</button>
-      <div class="form-msg" id="f-msg"></div>
-    </form>
+    <p class="sub">直接发邮件联系我，当日搭建，明天早上看到第一批信号</p>
+    <div class="card" style="text-align:center;padding:30px 20px">
+      <p style="font-size:14px;color:var(--muted);margin:0 0 8px">📧 邮箱</p>
+      <p style="font-size:26px;font-weight:700;color:var(--blue);margin:0 0 14px">john@jiangzhang.ca</p>
+      <p style="color:var(--muted);font-size:13px;margin:0">邮件里请说明：需要的版本（试用/标准/数据包）和交付形态（托管/本地部署）</p>
+    </div>
   </section>
 
   <div class="foot">
@@ -178,89 +146,5 @@ $ curl "http://127.0.0.1:8787/api/signals?company=OpenAI&limit=5"<br>
     信号 API · 2026
   </div>
 </div>
-<script>
-// ===== 表单提交配置 =====
-// 方式 1（默认）: 零配置，提交后打开邮件客户端，内容预填好，点发送即可。
-// 方式 2: 想用 Formspree 自动收件 -> 在下面填 https://formspree.io/f/你的ID ，即可自动提交，无需发邮件。
-const FORMSPREE_ENDPOINT = ""; // 例如 "https://formspree.io/f/abcdwxyz"
-const CONTACT_EMAIL = "john@jiangzhang.ca";
-
-function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
-
-function copyEmail(btn) {
-  const email = CONTACT_EMAIL;
-  let ok = false;
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(email).then(() => { ok = true; }).catch(() => {});
-  }
-  if (!ok) {
-    const ta = document.createElement("textarea");
-    ta.value = email; document.body.appendChild(ta); ta.select();
-    try { ok = document.execCommand("copy"); } catch (e) {}
-    document.body.removeChild(ta);
-  }
-  const old = btn.textContent;
-  btn.textContent = ok ? "✅ 邮箱已复制，去发邮件吧！" : "复制失败，请手动选中邮箱复制";
-  setTimeout(() => { btn.textContent = old; }, 2500);
-}
-
-function submitLead(e) {
-  e.preventDefault();
-  const name = document.getElementById("f-name").value.trim();
-  const plan = document.getElementById("f-plan").value;
-  const form = document.getElementById("f-form").value;
-  const contact = document.getElementById("f-contact").value.trim();
-  const note = document.getElementById("f-note").value.trim();
-  const msg = document.getElementById("f-msg");
-  if (!contact) { msg.className = "form-msg err"; msg.textContent = "请填写联系方式（微信或邮箱）"; return false; }
-  const text = "信号 API 试用咨询\n" +
-    "称呼: " + (name || "未填写") +
-    "\n需要的版本: " + plan +
-    "\n交付形态: " + form +
-    "\n联系方式: " + contact +
-    (note ? "\n备注: " + note : "");
-  if (FORMSPREE_ENDPOINT) {
-    fetch(FORMSPREE_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({ name, plan, form, contact, note })
-    }).then(r => {
-      if (r.ok) { msg.className = "form-msg ok"; msg.textContent = "✅ 已提交！我会尽快联系你。"; }
-      else { msg.className = "form-msg err"; msg.textContent = "提交失败，请复制下方内容发送到 " + CONTACT_EMAIL + "："; showCopy(msg, text); }
-    }).catch(() => {
-      msg.className = "form-msg err"; msg.textContent = "网络异常，请复制下方内容发送到 " + CONTACT_EMAIL + "："; showCopy(msg, text);
-    });
-  } else {
-    msg.className = "form-msg ok";
-    msg.innerHTML = "✅ 意向单已生成！请复制下方内容，发送到邮箱 <b>" + esc(CONTACT_EMAIL) + "</b>（或直接加微信告知）：";
-    showCopy(msg, text);
-  }
-  return false;
-}
-
-function showCopy(msg, text) {
-  const area = document.createElement("textarea");
-  area.value = text;
-  area.readOnly = true;
-  area.style.cssText = "width:100%;min-height:110px;margin-top:10px;font-size:13px;font-family:inherit;padding:8px;border:1px solid var(--line);border-radius:6px;";
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.textContent = "📋 一键复制";
-  btn.style.cssText = "margin-top:8px;padding:8px 18px;background:var(--blue);color:#fff;border:none;border-radius:6px;font-size:14px;cursor:pointer;";
-  btn.onclick = () => {
-    area.select();
-    let ok = false;
-    try { ok = document.execCommand("copy"); } catch (e) {}
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => { ok = true; }).catch(() => {});
-    }
-    btn.textContent = ok ? "✅ 已复制" : "复制失败，请手动选中复制";
-    setTimeout(() => { btn.textContent = "📋 一键复制"; }, 2000);
-  };
-  msg.appendChild(area);
-  msg.appendChild(document.createElement("br"));
-  msg.appendChild(btn);
-}
-</script>
 </body>
 </html>
