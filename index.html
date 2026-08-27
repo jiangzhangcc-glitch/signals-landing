@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>信号 API · AI 信号台 | 每天 4 个信息源，一屏看完 AI 圈</title>
+<style>
+  :root { --bg:#f6f8fa; --card:#fff; --line:#d0d7de; --text:#1f2328; --muted:#57606a; --blue:#0969da; --green:#1a7f37; --orange:#9a6700; }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; margin:0; background:var(--bg); color:var(--text); line-height:1.7; }
+  header { background:#fff; border-bottom:1px solid var(--line); padding:14px 20px; display:flex; align-items:center; gap:12px; }
+  header h1 { font-size:18px; margin:0; }
+  .wrap { max-width:920px; margin:0 auto; padding:0 20px; }
+  .hero { text-align:center; padding:64px 20px 48px; background:linear-gradient(180deg,#fff 0%,#f6f8fa 100%); }
+  .hero h2 { font-size:34px; margin:0 0 14px; }
+  .hero p { color:var(--muted); font-size:16px; max-width:640px; margin:0 auto 26px; }
+  .btn { display:inline-block; padding:11px 26px; border-radius:8px; text-decoration:none; font-weight:600; font-size:15px; margin:4px; }
+  .btn-primary { background:var(--blue); color:#fff; }
+  .btn-primary:hover { background:#0a63c9; }
+  .btn-ghost { border:1px solid var(--line); color:var(--text); background:#fff; }
+  .btn-ghost:hover { background:#f0f6ff; }
+  section { padding:44px 0; }
+  section h3 { font-size:22px; margin:0 0 8px; }
+  section .sub { color:var(--muted); margin:0 0 26px; }
+  .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .grid2 { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px; }
+  .card h4 { margin:0 0 8px; font-size:16px; }
+  .card p { margin:0; color:var(--muted); font-size:13px; }
+  .badge { display:inline-block; border-radius:10px; font-size:11px; padding:1px 8px; margin-right:6px; }
+  .b-blue { background:#ddf4ff; color:var(--blue); } .b-green { background:#dafbe1; color:var(--green); }
+  .b-orange { background:#fff1d6; color:var(--orange); } .b-gray { background:#f0f0f0; color:#444; }
+  table { width:100%; border-collapse:collapse; background:var(--card); }
+  th, td { border:1px solid var(--line); padding:12px 14px; text-align:left; font-size:14px; }
+  th { background:#f6f8fa; }
+  .price { font-size:22px; font-weight:700; color:var(--blue); }
+  .hot { background:#fff8c5; }
+  .demo { background:#0d1117; color:#c9d1d9; border-radius:8px; padding:16px 18px; font-family:Consolas,monospace; font-size:13px; overflow:auto; }
+  .demo .cm { color:#8b949e; }
+  .foot { border-top:1px solid var(--line); padding:26px 0 40px; color:var(--muted); font-size:12px; text-align:center; }
+  @media (max-width:760px) { .grid,.grid2,.grid3 { grid-template-columns:1fr; } .hero h2 { font-size:26px; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>📡 信号 API</h1>
+  <span style="color:var(--muted);font-size:13px">AI 信号台 · 每天 4 个信息源自动汇总</span>
+</header>
+
+<div class="hero">
+  <h2>一屏看完 AI 圈今天发生了什么</h2>
+  <p>GitHub Trending · HuggingFace · YouTube AI 频道 · 硅谷峰 —— 自动抓取、去重、打标、归档。<br>
+     每条信号带原始链接可溯源，历史档案可回查，机器可读 API 直接对接你的流程。</p>
+  <a class="btn btn-primary" href="#pricing">¥99/月 试用</a>
+  <a class="btn btn-ghost" href="#demo">看演示</a>
+</div>
+
+<div class="wrap">
+  <section>
+    <h3>4 个高质量信息源</h3>
+    <p class="sub">全部来自公开接口与公开 RSS，每日自动采集</p>
+    <div class="grid">
+      <div class="card"><h4>🐙 GitHub Trending</h4><p>每日热门仓库：Top / Rising，看开源项目怎么火起来的。</p></div>
+      <div class="card"><h4>🤗 HuggingFace</h4><p>热门模型与新模型榜，含下载量、点赞、标签，模型迭代一目了然。</p></div>
+      <div class="card"><h4>▶️ YouTube AI 频道</h4><p>精选 AI 频道最新动态与资讯，视频摘要直连原片。</p></div>
+      <div class="card"><h4>🏙️ 硅谷峰</h4><p>硅谷科技动态精选，公司与主题自动归类。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h3>四个卖点</h3>
+    <p class="sub">为什么值得每天打开它</p>
+    <div class="grid2">
+      <div class="card"><h4>🔗 溯源</h4><p>每条信号带原始 URL 与发布时间，几分钟顶你翻一天网页。</p></div>
+      <div class="card"><h4>⏳ 时间压缩</h4><p>4 个源汇总成一张清单，按公司 / 主题 / 类型过滤，只看关心的。</p></div>
+      <div class="card"><h4>🗂️ 历史档案</h4><p>每日自动归档，随时回查"上周发生了什么"——积累价值。</p></div>
+      <div class="card"><h4>🤖 机器可读</h4><p>本地 JSON API + JSON/CSV 导出，直接对接你的量化、研究或内容流程。</p></div>
+    </div>
+  </section>
+
+  <section id="demo">
+    <h3>实时演示</h3>
+    <p class="sub">本地部署后即刻可用（部署包随购买交付）</p>
+    <div class="demo">
+<span class="cm"># 今日 OpenAI 相关信号（Top 5）</span><br>
+$ curl "http://127.0.0.1:8787/api/signals?company=OpenAI&limit=5"<br>
+{<br>
+&nbsp;&nbsp;"count": 5,<br>
+&nbsp;&nbsp;"signals": [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ "signal_type": "model", "title": "Qwen3.8-Flash-Next",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url": "https://huggingface.co/...", "summary": "..." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+&nbsp;&nbsp;]<br>
+}
+    </div>
+    <p style="margin-top:14px;color:var(--muted);font-size:13px">
+      <span class="badge b-blue">看板</span>浏览器打开即用的可视化面板，支持筛选与历史回查
+      <span class="badge b-green">API</span>/health /api/signals /api/archive 全部端点
+      <span class="badge b-orange">导出</span>历史全量 JSON / CSV 一键导出
+    </p>
+  </section>
+
+  <section id="pricing">
+    <h3>定价</h3>
+    <p class="sub">先试用一周，跑通再升级</p>
+    <table>
+      <tr><th></th><th>试用 / 开发者版</th><th class="hot">标准版</th><th>数据包 / 年度</th></tr>
+      <tr><td><b>价格</b></td><td><span class="price">¥99</span>/月</td><td class="hot"><span class="price">¥199</span>/月</td><td>单月 <span class="price">¥1,999</span> · 年 <span class="price">¥9,999</span></td></tr>
+      <tr><td>数据范围</td><td>实时信号（4 来源）</td><td class="hot">实时 + 历史档案</td><td>全量历史 + 月度更新</td></tr>
+      <tr><td>接口</td><td>/api/signals</td><td class="hot">全部端点</td><td>全部端点 + 原始导出</td></tr>
+      <tr><td>历史查询</td><td>—</td><td class="hot">✅ /api/archive</td><td>✅ + 离线文件</td></tr>
+      <tr><td>支持</td><td>邮件答疑</td><td class="hot">邮件 + 配置协助</td><td>专属对接</td></tr>
+    </table>
+    <p style="margin-top:18px;text-align:center">
+      <a class="btn btn-primary" href="#contact">联系试用</a>
+    </p>
+  </section>
+
+  <section>
+    <h3>交付形态</h3>
+    <p class="sub">按你的需要选</p>
+    <div class="grid3">
+      <div class="card"><h4>A. 托管服务</h4><p>我方部署运行，给你 HTTP 接口地址，零运维。</p></div>
+      <div class="card"><h4>B. 本地部署</h4><p>整套源码 + 脚本，数据完全在你机器上。</p></div>
+      <div class="card"><h4>C. 一次性数据包</h4><p>历史全量 JSON/CSV 一次买断，无后续服务。</p></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h3>联系试用</h3>
+    <p class="sub">回复或私信即可，当日搭建，明天早上看到第一批信号</p>
+    <div class="card" style="text-align:center;padding:26px">
+      <p style="font-size:15px;margin:0 0 14px"><b>📍 演示看板：</b><span id="demoUrl">随部署包提供</span></p>
+      <p style="color:var(--muted);font-size:13px;margin:0">联系时请说明：需要试用版 / 标准版 / 数据包，以及托管还是本地部署</p>
+    </div>
+  </section>
+
+  <div class="foot">
+    ⚠️ 数据来自公开接口与公开 RSS，规则自动打标、未人工核实，不构成任何投资建议；转售需自行核对各来源服务条款。<br>
+    信号 API · 2026
+  </div>
+</div>
+</body>
+</html>
