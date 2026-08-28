@@ -180,30 +180,19 @@ $ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"<br>
       <tr><td>接口</td><td>/api/signals</td><td class="hot">全部端点</td><td>全部端点 + 原始导出</td></tr>
       <tr><td>历史查询</td><td>—</td><td class="hot">✅ /api/archive</td><td>✅ + 离线文件</td></tr>
       <tr><td>支持</td><td>邮件答疑</td><td class="hot">邮件 + 配置协助</td><td>专属对接</td></tr>
+      <tr><td><b>购买</b></td>
+        <td><a href="https://buy.stripe.com/6oU3cv4W0366aKkfgLgw000?locale=en" target="_blank" style="font-size:12px;color:var(--blue);font-weight:600">点击付款 →</a></td>
+        <td class="hot"><a href="https://buy.stripe.com/aFa8wPdswgWWbOoecHgw001?locale=en" target="_blank" style="font-size:12px;color:var(--blue);font-weight:600">点击付款 →</a></td>
+        <td><a href="https://buy.stripe.com/5kQeVd0FK8qq2dO5Gbgw002?locale=en" target="_blank" style="font-size:12px;color:var(--blue);font-weight:600">点击付款 →</a></td>
+      </tr>
     </table>
     <p style="margin-top:18px;text-align:center">
-      <a class="btn btn-primary" href="javascript:void(0)" onclick="document.getElementById('pay-panel').style.display='block';this.style.display='none'">付款</a>
+      <a class="btn btn-ghost" href="javascript:void(0)" onclick="document.getElementById('pay-panel').style.display='block';this.style.display='none'">其他付款方式（微信 · 海外卡）</a>
     </p>
     <div id="pay-panel" style="display:none;max-width:600px;margin:16px auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px">
-      <h4 style="margin:0 0 6px;font-size:16px">💰 选择订阅方案付款</h4>
+      <h4 style="margin:0 0 6px;font-size:16px">💰 其他付款方式</h4>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 14px">订阅请用上方表格中的「点击付款」；以下为微信支付与海外卡通道。</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <div style="flex:1;min-width:160px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:14px">
-          <div style="font-size:13px;font-weight:700">基础版</div>
-          <div style="font-size:18px;font-weight:700;color:var(--blue);margin:4px 0">CA$15/月</div>
-          <a href="https://buy.stripe.com/6oU3cv4W0366aKkfgLgw000?locale=en" target="_blank">点击付款 →</a>
-        </div>
-        <div style="flex:1;min-width:160px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:14px;background:#fff8c5">
-          <div style="font-size:13px;font-weight:700">标准版</div>
-          <div style="font-size:18px;font-weight:700;color:var(--blue);margin:4px 0">CA$40/月</div>
-          <a href="https://buy.stripe.com/aFa8wPdswgWWbOoecHgw001?locale=en" target="_blank" id="pay-standard">点击付款 →</a>
-        </div>
-        <div style="flex:1;min-width:160px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:14px">
-          <div style="font-size:13px;font-weight:700">年度版</div>
-          <div style="font-size:18px;font-weight:700;color:var(--blue);margin:4px 0">CA$300/年</div>
-          <a href="https://buy.stripe.com/5kQeVd0FK8qq2dO5Gbgw002?locale=en" target="_blank" id="pay-annual">点击付款 →</a>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px">
         <div style="flex:1;min-width:150px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:12px">
           <div style="font-size:13px;font-weight:600;margin-bottom:8px">微信支付（国内）</div>
           <img src="pay_wechat.png" alt="微信收款码" style="width:150px;height:auto;border-radius:6px">
