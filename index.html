@@ -124,6 +124,32 @@
     </p>
   </section>
 
+  <section id="api">
+    <h3>开发者 API · 直接对接你的流程</h3>
+    <p class="sub">标准 JSON 接口，字段稳定、格式统一，可编程调用——这就是名字里"API"三个字的意义。</p>
+    <div class="demo" style="font-size:12px">
+<span class="cm"># 今日 OpenAI 相关信号（Top 5）</span><br>
+$ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"<br>
+{<br>
+&nbsp;&nbsp;"count": 5,<br>
+&nbsp;&nbsp;"signals": [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ "signal_type": "model", "title": "Qwen3.8-Flash-Next",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url": "https://huggingface.co/...", "summary": "..." },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+&nbsp;&nbsp;]<br>
+}
+    </div>
+    <p style="margin-top:14px;color:var(--muted);font-size:13px">
+      <span class="badge b-gray">GET</span>/api/signals&nbsp; · &nbsp;/api/signals/stats&nbsp; · &nbsp;/api/signals/{id}
+      <br>
+      <span class="badge b-gray">历史</span>/api/archive?date=&nbsp; · &nbsp;/api/archive/days
+      <br>
+      <span class="badge b-gray">参数</span>company / topic / source / signal_type / since / limit
+      <br>
+      <span class="badge b-orange">导出</span>JSON / CSV 全量历史，一键下载
+    </p>
+  </section>
+
   <section>
     <h3>交付形态</h3>
     <details class="delivery" open>
@@ -149,8 +175,8 @@
     <h3>订阅方案</h3>
     <table>
       <tr><th></th><th>基础版</th><th class="hot">标准版</th><th>年度版</th></tr>
-      <tr><td><b>价格</b></td><td><span class="price">CA$15</span>/月</td><td class="hot"><span class="price">CA$40</span>/月</td><td><span class="price">CA$300</span>/月</td></tr>
-      <tr><td>数据范围</td><td>当日推送</td><td class="hot">当日推送 + 月度分析</td><td>当日推送 + 月档案及分析 + 年全量历史</td></tr>
+      <tr><td><b>价格</b></td><td><span class="price">CA$15</span>/月</td><td class="hot"><span class="price">CA$40</span>/月</td><td><span class="price">CA$300</span>/年</td></tr>
+      <tr><td>数据范围</td><td>当日推送</td><td class="hot">当日推送 + 历史档案</td><td>当日推送 + 历史档案 + 年全量历史导出</td></tr>
       <tr><td>接口</td><td>/api/signals</td><td class="hot">全部端点</td><td>全部端点 + 原始导出</td></tr>
       <tr><td>历史查询</td><td>—</td><td class="hot">✅ /api/archive</td><td>✅ + 离线文件</td></tr>
       <tr><td>支持</td><td>邮件答疑</td><td class="hot">邮件 + 配置协助</td><td>专属对接</td></tr>
@@ -173,7 +199,7 @@
         </div>
         <div style="flex:1;min-width:160px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:14px">
           <div style="font-size:13px;font-weight:700">年度版</div>
-          <div style="font-size:18px;font-weight:700;color:var(--blue);margin:4px 0">CA$300/月</div>
+          <div style="font-size:18px;font-weight:700;color:var(--blue);margin:4px 0">CA$300/年</div>
           <a href="#" id="pay-annual">待配置（联系客服）</a>
         </div>
       </div>
