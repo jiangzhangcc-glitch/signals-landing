@@ -56,12 +56,7 @@
   .pay-tier .tier-name { font-size:14px; font-weight:700; }
   .pay-tier .tier-price { font-size:18px; font-weight:700; color:var(--blue); margin:4px 0; }
   .pay-tier a { display:inline-block; margin-top:6px; text-decoration:none; font-weight:600; font-size:13px; color:#fff; background:var(--blue); padding:6px 16px; border-radius:6px; }
-  .api-row { display:flex; gap:16px; align-items:flex-start; justify-content:center; }
-  .api-panel { flex:1 1 auto; max-width:520px; background:#0d1117; color:#c9d1d9; border-radius:8px; overflow:hidden; }
-  .api-head { display:flex; justify-content:space-between; align-items:center; padding:8px 14px; background:#161b22; color:#8b949e; font-size:12px; border-bottom:1px solid #30363d; }
-  .api-body { padding:14px 16px; font-family:Consolas,monospace; font-size:12px; line-height:1.7; white-space:pre; overflow:auto; max-height:220px; }
-  .api-body .cm { color:#8b949e; }
-  @media (max-width:760px) { .grid,.grid2,.grid3,.features-grid,.delivery-grid { grid-template-columns:1fr; } .hero h2 { font-size:26px; } #pricing table { width:100%; } .wrap { max-width:92%; } .api-row { flex-direction:column; align-items:center; } .api-panel { max-width:100%; width:100%; } }
+  @media (max-width:760px) { .grid,.grid2,.grid3,.features-grid,.delivery-grid { grid-template-columns:1fr; } .hero h2 { font-size:26px; } #pricing table { width:100%; } .wrap { max-width:92%; } }
 </style>
 </head>
 <body>
@@ -121,35 +116,9 @@
   <section id="demo">
     <h3>实时演示</h3>
     <p class="sub">👇 在线体验（真实采集数据，无需安装）｜本地部署后功能更全（含历史档案查询）</p>
-    <div class="api-row">
-      <div style="text-align:center;margin:10px 0 18px;flex:0 0 auto">
-        <a class="btn btn-primary" href="https://jiangzhangcc-glitch.github.io/signals-api-demo/" target="_blank">🎯 打开在线演示看板</a>
-        <br>
-        <a class="btn btn-ghost" href="javascript:void(0)" onclick="toggleApi(this)">🔧 开发者 API 流程</a>
-      </div>
-      <div id="api-panel" class="api-panel" style="display:none">
-        <div class="api-head">
-          <span>开发者 API · 标准 JSON 接口</span>
-          <button type="button" onclick="copyApi()" style="padding:4px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer;font-size:12px">📋 复制</button>
-        </div>
-        <div class="api-body" id="api-body"><span class="cm"># 今日 OpenAI 相关信号（Top 5）</span>
-$ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"
-{
-  "count": 5,
-  "signals": [
-    { "signal_type": "model", "title": "Qwen3.8-Flash-Next",
-      "url": "https://huggingface.co/...", "summary": "..." },
-    ...
-  ]
-}
----
-GET /api/signals · /api/signals/stats · /api/signals/{id}
-历史: /api/archive?date= · /api/archive/days
-参数: company / topic / source / signal_type / since / limit
-导出: JSON / CSV 全量历史，一键下载
-        </div>
-      </div>
-    </div>
+    <p style="text-align:center;margin:10px 0 18px">
+      <a class="btn btn-primary" href="https://jiangzhangcc-glitch.github.io/signals-api-demo/" target="_blank">🎯 打开在线演示看板</a>
+    </p>
     <p style="margin-top:14px;color:var(--muted);font-size:13px">
       <span class="badge b-blue">看板</span>浏览器打开即用的可视化面板，支持筛选与历史回查
       <span class="badge b-green">API</span>/health /api/signals /api/archive 全部端点
@@ -215,29 +184,6 @@ function togglePanel(id, btn) {
   var hidden = p.style.display === 'none' || !p.style.display;
   p.style.display = hidden ? 'block' : 'none';
   if (btn) btn.textContent = hidden ? btn.textContent.replace('微信付款方式', '微信付款方式（收起）').replace('(WeChat)', '(collapse)') : btn.textContent.replace('微信付款方式（收起）', '微信付款方式').replace('(collapse)', '(WeChat)');
-}
-function toggleApi(btn) {
-  var p = document.getElementById('api-panel');
-  var hidden = p.style.display === 'none' || !p.style.display;
-  p.style.display = hidden ? 'block' : 'none';
-  if (btn) btn.textContent = hidden ? '🔧 开发者 API 流程（收起）' : '🔧 开发者 API 流程';
-}
-function copyApi() {
-  var body = document.getElementById('api-body');
-  var text = body.innerText;
-  var btn = document.querySelector('.api-head button');
-  var ok = false;
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(function(){ ok = true; }).catch(function(){});
-  }
-  if (!ok) {
-    var ta = document.createElement('textarea');
-    ta.value = text; document.body.appendChild(ta); ta.select();
-    try { ok = document.execCommand('copy'); } catch (e) {}
-    document.body.removeChild(ta);
-  }
-  btn.textContent = ok ? '✅ 已复制' : '复制失败';
-  setTimeout(function(){ btn.textContent = '📋 复制'; }, 2000);
 }
 </script>
 </body>
