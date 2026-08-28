@@ -51,7 +51,7 @@
   details.delivery summary::before { content:"▸ "; color:var(--blue); }
   details.delivery[open] summary::before { content:"▾ "; }
   details.delivery .d-body { padding:0 20px 18px; color:var(--muted); font-size:14px; }
-  .delivery-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; align-items:start; }
+  .delivery-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; align-items:start; }
   .pay-tier { border:1px solid var(--line); border-radius:8px; padding:14px; text-align:center; margin:8px 0; }
   .pay-tier .tier-name { font-size:14px; font-weight:700; }
   .pay-tier .tier-price { font-size:18px; font-weight:700; color:var(--blue); margin:4px 0; }
@@ -140,6 +140,10 @@
     <details class="delivery" open>
       <summary>C. 一次性数据包</summary>
       <div class="d-body">历史全量 JSON/CSV 一次买断，无后续服务。适合只需要历史数据做离线分析、不需要实时订阅的买家。交付后数据归你所有，可永久使用。</div>
+    </details>
+    <details class="delivery" open>
+      <summary>D. API 及说明</summary>
+      <div class="d-body">标准 JSON 接口，字段稳定、格式统一，可编程调用。端点：/api/signals（按公司/主题/来源/类型/时间过滤）、/api/signals/stats、/api/archive（历史按日期查询）、/api/archive/days；支持 JSON/CSV 全量导出。交付时附完整接口文档（API_DOC.md）与 curl/Python 调用示例，可直接对接你的量化、研究或内容流程。</div>
     </details>
     </div>
   </section>
