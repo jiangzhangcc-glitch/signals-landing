@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>信号 API · AI 信号台 | 每天 4 个信息源，一屏看完 AI 圈</title>
+<title>Signals API · AI 信号台 | 一屏刷完今日 AI 圈</title>
 <style>
   :root { --bg:#f6f8fa; --card:#fff; --line:#d0d7de; --text:#1f2328; --muted:#57606a; --blue:#0969da; --green:#1a7f37; --orange:#9a6700; }
   * { box-sizing:border-box; }
@@ -13,7 +13,7 @@
   .wrap { max-width:920px; margin:0 auto; padding:0 20px; }
   .hero { text-align:center; padding:64px 20px 48px; background:linear-gradient(180deg,#fff 0%,#f6f8fa 100%); }
   .hero h2 { font-size:34px; margin:0 0 14px; }
-  .hero p { color:var(--muted); font-size:16px; max-width:640px; margin:0 auto 26px; }
+  .hero p { color:var(--muted); font-size:16px; max-width:680px; margin:0 auto 26px; }
   .btn { display:inline-block; padding:11px 26px; border-radius:8px; text-decoration:none; font-weight:600; font-size:15px; margin:4px; }
   .btn-primary { background:var(--blue); color:#fff; }
   .btn-primary:hover { background:#0a63c9; }
@@ -28,29 +28,38 @@
   .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px; }
   .card h4 { margin:0 0 8px; font-size:16px; }
   .card p { margin:0; color:var(--muted); font-size:13px; }
+  .feature { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:22px 24px; margin:14px 0; }
+  .feature h4 { margin:0 0 10px; font-size:17px; }
+  .feature p { margin:0; color:var(--text); font-size:14px; }
   .badge { display:inline-block; border-radius:10px; font-size:11px; padding:1px 8px; margin-right:6px; }
   .b-blue { background:#ddf4ff; color:var(--blue); } .b-green { background:#dafbe1; color:var(--green); }
   .b-orange { background:#fff1d6; color:var(--orange); } .b-gray { background:#f0f0f0; color:#444; }
   table { width:100%; border-collapse:collapse; background:var(--card); }
   th, td { border:1px solid var(--line); padding:12px 14px; text-align:left; font-size:14px; }
   th { background:#f6f8fa; }
-  #pricing table { width:66.7%; margin:0 auto; }
-  #pricing th, #pricing td { padding:8px 9px; font-size:12px; }
-  #pricing .price { font-size:17px; }
-  .price { font-size:22px; font-weight:700; color:var(--blue); }
+  #pricing table { width:80%; margin:0 auto; }
+  #pricing th, #pricing td { padding:10px 12px; font-size:13px; text-align:center; }
+  #pricing .price { font-size:18px; font-weight:700; color:var(--blue); }
   .hot { background:#fff8c5; }
-  .demo { background:#0d1117; color:#c9d1d9; border-radius:8px; padding:16px 18px; font-family:Consolas,monospace; font-size:13px; overflow:auto; }
-  .demo .cm { color:#8b949e; }
   .foot { border-top:1px solid var(--line); padding:26px 0 40px; color:var(--muted); font-size:12px; text-align:center; }
   .lang-switch { margin-left:auto; display:flex; gap:6px; align-items:center; }
   .lang-switch a { text-decoration:none; font-size:13px; font-weight:600; padding:4px 10px; border-radius:6px; border:1px solid var(--line); color:var(--muted); background:#fff; }
   .lang-switch a.active { background:var(--blue); color:#fff; border-color:var(--blue); }
-  @media (max-width:760px) { .grid,.grid2,.grid3 { grid-template-columns:1fr; } .hero h2 { font-size:26px; } }
+  details.delivery { background:var(--card); border:1px solid var(--line); border-radius:8px; margin:10px 0; }
+  details.delivery summary { cursor:pointer; padding:16px 20px; font-weight:600; font-size:15px; list-style:none; }
+  details.delivery summary::before { content:"▸ "; color:var(--blue); }
+  details.delivery[open] summary::before { content:"▾ "; }
+  details.delivery .d-body { padding:0 20px 18px; color:var(--muted); font-size:14px; }
+  .pay-tier { border:1px solid var(--line); border-radius:8px; padding:14px; text-align:center; margin:8px 0; }
+  .pay-tier .tier-name { font-size:14px; font-weight:700; }
+  .pay-tier .tier-price { font-size:18px; font-weight:700; color:var(--blue); margin:4px 0; }
+  .pay-tier a { display:inline-block; margin-top:6px; text-decoration:none; font-weight:600; font-size:13px; color:#fff; background:var(--blue); padding:6px 16px; border-radius:6px; }
+  @media (max-width:760px) { .grid,.grid2,.grid3 { grid-template-columns:1fr; } .hero h2 { font-size:26px; } #pricing table { width:100%; } }
 </style>
 </head>
 <body>
 <header>
-  <h1>📡 信号 API</h1>
+  <h1>📡 Signals API</h1>
   <span style="color:var(--muted);font-size:13px">AI 信号台 · 每天 4 个信息源自动汇总</span>
   <div class="lang-switch">
     <a href="https://signals.jiangzhang.ca/" class="active">中文</a>
@@ -59,34 +68,46 @@
 </header>
 
 <div class="hero">
-  <h2>一屏看完 AI 圈今天发生了什么</h2>
-  <p>GitHub Trending · HuggingFace · YouTube AI 频道 · 硅谷峰<br>
-     —— <span style="white-space:nowrap">自动抓取、去重、打标、归档。</span><br>
-     每条信号带原始链接可溯源，历史档案可回查，机器可读 API 直接对接你的流程。</p>
+  <h2>一屏刷完今日 AI 圈</h2>
+  <p>GitHub · HuggingFace · YouTube · SiliconValley —— 自动抓取、去重、打标、归档、推送。<br>
+     每条信号带原始链接，可溯源、可档案、可回查、可机读、可 API 直连。</p>
   <a class="btn btn-primary" href="#demo">🎯 在线体验</a>
-  <a class="btn btn-ghost" href="#pricing">查看方案</a>
 </div>
 
 <div class="wrap">
   <section>
-    <h3>4 个高质量信息源</h3>
-    <p class="sub">全部来自公开接口与公开 RSS，每日自动采集</p>
+    <h3>高质量信息源</h3>
+    <p class="sub">四个信息源全部来自公开接口与公开 RSS，每日早/中/晚/夜四次自动采集与推送。</p>
     <div class="grid">
-      <div class="card"><h4>🐙 GitHub Trending</h4><p>每日热门仓库：Top / Rising，看开源项目怎么火起来的。</p></div>
-      <div class="card"><h4>🤗 HuggingFace</h4><p>热门模型与新模型榜，含下载量、点赞、标签，模型迭代一目了然。</p></div>
-      <div class="card"><h4>▶️ YouTube AI 频道</h4><p>精选 AI 频道最新动态与资讯，视频摘要直连原片。</p></div>
-      <div class="card"><h4>🏙️ 硅谷峰</h4><p>硅谷科技动态精选，公司与主题自动归类。</p></div>
+      <div class="card"><h4>🐙 GitHub Trending</h4><p>全球开源的风向标。每天自动抓取 GitHub 热门仓库与上升新星，覆盖 AI 框架、Agent 项目、开发工具等最活跃的开源生态。从 star 增速和社区热度，你能第一时间看到哪些项目正在被开发者追捧——往往一个仓库的爆发式增长，就是一项新技术走红的开始。</p></div>
+      <div class="card"><h4>🤗 HuggingFace</h4><p>模型世界的发布中心。自动汇总 HuggingFace 热门模型与新上架模型，附带下载量、点赞数与任务标签。谁发布了新模型、哪个模型被社区大量下载、多模态还是推理优化——模型迭代的节奏和方向，在这里一目了然，是判断技术路线最直接的依据。</p></div>
+      <div class="card"><h4>▶️ YouTube AI 频道</h4><p>视频形态的深度内容。精选 AI 领域高质量频道的最新视频与资讯，从技术拆解、论文解读到行业对话，摘要直连原片。视频信息密度高、背景完整，适合在通勤或碎片时间里补全你对一个技术方向的立体认知。</p></div>
+      <div class="card"><h4>🏙️ 硅谷</h4><p>北美科技的一线动态。精选硅谷科技公司的最新动态，覆盖产品发布、公司人事、融资事件与行业讨论，自动按公司与主题归类。不靠二手转述，直接呈现北美 AI 产业的第一手节奏。</p></div>
     </div>
   </section>
 
   <section>
     <h3>四个亮点</h3>
-    <p class="sub">为什么值得每天打开它</p>
-    <div class="grid2">
-      <div class="card"><h4>🔗 溯源</h4><p>每条信号带原始 URL 与发布时间，几分钟顶你翻一天网页。</p></div>
-      <div class="card"><h4>⏳ 时间压缩</h4><p>4 个源汇总成一张清单，按公司 / 主题 / 类型过滤，只看关心的。</p></div>
-      <div class="card"><h4>🗂️ 历史档案</h4><p>每日自动归档，随时回查"上周发生了什么"——积累价值。</p></div>
-      <div class="card"><h4>🤖 机器可读</h4><p>本地 JSON API + JSON/CSV 导出，直接对接你的量化、研究或内容流程。</p></div>
+    <p class="sub">AI 圈 24 小时内发生什么？时空维度在哪里？信号是否真实可靠？数据资产价值连城？人机皆可读？</p>
+
+    <div class="feature">
+      <h4>🔗 溯源 · 信号是否真实可靠？</h4>
+      <p>AI 圈每天产生海量信息，但大部分内容经二手转述、标题党加工后，真假难辨。Signals API 的第一原则是：每条信号都能回到源头。我们抓取的是 GitHub 仓库主页、HuggingFace 模型卡片、YouTube 原视频和硅谷原始资讯——每条信号自带原始 URL、发布时间和发布者，你想核实，点一下就到原页面，不经过任何中间解释。为什么这很重要？在 AI 这个信息失真率极高的领域，"谁说的"和"原始出处"就是价值的锚点。你可以用发布时间判断信息新鲜度，用发布者判断可信度，用原始链接做二次研究。对研究员来说，可溯源意味着每一份引用都有据可查；对投资者来说，可溯源意味着决策依据经得起追问；对内容创作者来说，可溯源意味着你的选题可以放心引用。我们不生产观点，只搬运可验证的事实，并把"回到源头"做成产品的默认行为。</p>
+    </div>
+
+    <div class="feature">
+      <h4>⏳ 时间压缩 · AI 圈 24 小时内发生什么？</h4>
+      <p>假设你想了解 AI 圈今天发生了什么：GitHub 有几百个新仓库，HuggingFace 有几十个新模型，YouTube 有上百条 AI 视频，硅谷的新闻更是铺天盖地。手动翻完这些，至少半天。Signals API 把这些压缩成一张清单：每天固定四次采集，自动去重、自动归类，把 4 个源头的信息流凝练成几十条关键信号。更进一步的压缩来自筛选：按公司（OpenAI、DeepSeek、Qwen…）过滤，只看你关心的玩家；按主题（模型、Agent、安全、融资…）过滤，只看你关心的方向；按类型过滤，只看发布还是融资。时间压缩的本质不是"少看"，而是"少看无用的"——把每天 8 小时的信息狩猎，压缩成 5 分钟的通勤阅读。对时间即成本的专业人士，这种压缩本身就是产品价值。你不再需要维护几十个书签和 RSS 订阅，一个信号台就是全部入口。</p>
+    </div>
+
+    <div class="feature">
+      <h4>🗂️ 历史档案 · 时空维度在哪里？</h4>
+      <p>大多数信息产品只给你"此刻"，Signals API 还给你"过去"。每天采集的信号自动归档进历史档案：昨天的、上周的、上个月的，随时可以回查。为什么历史这么重要？第一，回看趋势——上周某模型突然登顶 HuggingFace，本周热度是否延续？历史数据让你看到变化轨迹，而不只是孤立的快照。第二，找回错过——出差一周回来，翻档案就能补上错过的所有重要发布，不会因为"没看到"而落后。第三，积累资产——连续运行三个月、一年后，这份档案本身就是独一无二的数据资产，记录了 AI 行业某段时间的完整演化。对研究和投资来说，历史不是怀旧，是分析的基本盘：没有历史，你无法判断"现在"是正常波动还是异常信号。档案每天都在积累，晚订阅一天，就少一天的数据厚度。</p>
+    </div>
+
+    <div class="feature">
+      <h4>🤖 机器可读 · 数据资产价值连城？人机皆可读？</h4>
+      <p>信息产品分两种：给人看的，和给机器读的。Signals API 两者都要——既有可视化看板给人看，更提供 JSON API 和 CSV/JSON 导出给机器读。为什么机器可读是刚需？因为真实的工作流里，"人"不应该是唯一的消费者：量化团队要把信号喂进模型，研究员要把数据导入分析工具，内容团队要批量抓取选题，创业者要监控竞对动态——这些场景都需要结构化数据，而不是截图。我们的 API 提供按公司、主题、来源、类型、时间过滤的查询端点，数据以标准 JSON 返回，字段稳定、格式统一，可以直接对接你的代码。历史档案支持按日期批量拉取，一次导出即可离线分析。对人，我们有看板；对机器，我们有 API；对流程，我们有导出。人机皆可读，才是真正的"数据资产"。</p>
     </div>
   </section>
 
@@ -105,29 +126,31 @@
 
   <section>
     <h3>交付形态</h3>
-    <p class="sub">按你的需要选</p>
-    <div class="grid3">
-      <div class="card"><h4>A. 托管服务</h4><p>我方部署运行，给你 HTTP 接口地址，零运维。</p></div>
-      <div class="card"><h4>B. 本地部署</h4><p>整套源码 + 脚本，数据完全在你机器上。</p></div>
-      <div class="card"><h4>C. 一次性数据包</h4><p>历史全量 JSON/CSV 一次买断，无后续服务。</p></div>
-    </div>
+    <details class="delivery" open>
+      <summary>A. 托管服务</summary>
+      <div class="d-body">我方部署运行，给你 HTTP 接口地址，零运维。你只需要拿到接口地址和访问凭据，数据采集、服务更新、可用性维护都由我方负责，适合不想碰代码、只想直接用数据的买家。</div>
+    </details>
+    <details class="delivery">
+      <summary>B. 本地部署</summary>
+      <div class="d-body">整套源码 + 脚本，数据完全在你机器上。我们交付完整代码与一键启动脚本（数据采集、API 服务、可视化看板），你部署在自己服务器上，数据不出你的网络，适合有 IT 能力、对数据主权有要求的团队。</div>
+    </details>
+    <details class="delivery">
+      <summary>C. 一次性数据包</summary>
+      <div class="d-body">历史全量 JSON/CSV 一次买断，无后续服务。适合只需要历史数据做离线分析、不需要实时订阅的买家。交付后数据归你所有，可永久使用。</div>
+    </details>
   </section>
 
   <section id="contact">
     <h3>联系试用</h3>
-    <p class="sub">直接发邮件联系我，当日搭建，明天早上看到第一批信号</p>
-    <p style="text-align:left;color:var(--text);font-size:14px;margin:6px 0 0">
-      📧 <b style="color:var(--blue)">john@jiangzhang.ca</b> —— 邮件里请说明：需要的版本（试用/标准/数据包）和交付形态（托管/本地部署）
-    </p>
+    <p class="sub">请发邮件联系客服：📧 <b style="color:var(--blue)">john@jiangzhang.ca</b>，次日晨开始第一次信号推送。</p>
   </section>
 
   <section id="pricing">
     <h3>订阅方案</h3>
-    <p class="sub">先试用一周，跑通再升级</p>
     <table>
-      <tr><th></th><th>试用 / 开发者版</th><th class="hot">标准版</th><th>数据包 / 年度</th></tr>
-      <tr><td><b>价格</b></td><td><span class="price">¥99</span>/月</td><td class="hot"><span class="price">¥199</span>/月</td><td>单月 <span class="price">¥1,999</span> · 年 <span class="price">¥9,999</span></td></tr>
-      <tr><td>数据范围</td><td>实时信号（4 来源）</td><td class="hot">实时 + 历史档案</td><td>全量历史 + 月度更新</td></tr>
+      <tr><th></th><th>基础版</th><th class="hot">标准版</th><th>年度版</th></tr>
+      <tr><td><b>价格</b></td><td><span class="price">CA$15</span>/月</td><td class="hot"><span class="price">CA$40</span>/月</td><td><span class="price">CA$300</span>/月</td></tr>
+      <tr><td>数据范围</td><td>当日推送</td><td class="hot">当日推送 + 月度分析</td><td>当日推送 + 月档案及分析 + 年全量历史</td></tr>
       <tr><td>接口</td><td>/api/signals</td><td class="hot">全部端点</td><td>全部端点 + 原始导出</td></tr>
       <tr><td>历史查询</td><td>—</td><td class="hot">✅ /api/archive</td><td>✅ + 离线文件</td></tr>
       <tr><td>支持</td><td>邮件答疑</td><td class="hot">邮件 + 配置协助</td><td>专属对接</td></tr>
@@ -135,33 +158,45 @@
     <p style="margin-top:18px;text-align:center">
       <a class="btn btn-primary" href="javascript:void(0)" onclick="document.getElementById('pay-panel').style.display='block';this.style.display='none'">付款</a>
     </p>
-    <div id="pay-panel" style="display:none;max-width:560px;margin:16px auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px">
-      <h4 style="margin:0 0 6px;font-size:16px">💰 付款方式</h4>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 16px">付款后请发邮件告知：john@jiangzhang.ca（注明版本与邮箱，当日交付）· After payment, email john@jiangzhang.ca</p>
+    <div id="pay-panel" style="display:none;max-width:600px;margin:16px auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px">
+      <h4 style="margin:0 0 6px;font-size:16px">💰 选择订阅方案付款</h4>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div style="flex:1;min-width:160px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:14px">
+          <div style="font-size:13px;font-weight:700">基础版</div>
+          <div style="font-size:18px;font-weight:700;color:var(--blue);margin:4px 0">CA$15/月</div>
+          <a href="https://buy.stripe.com/6oU3cv4W0366aKkfgLgw000?locale=en" target="_blank">点击付款 →</a>
+        </div>
+        <div style="flex:1;min-width:160px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:14px;background:#fff8c5">
+          <div style="font-size:13px;font-weight:700">标准版</div>
+          <div style="font-size:18px;font-weight:700;color:var(--blue);margin:4px 0">CA$40/月</div>
+          <a href="#" id="pay-standard">待配置（联系客服）</a>
+        </div>
+        <div style="flex:1;min-width:160px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:14px">
+          <div style="font-size:13px;font-weight:700">年度版</div>
+          <div style="font-size:18px;font-weight:700;color:var(--blue);margin:4px 0">CA$300/月</div>
+          <a href="#" id="pay-annual">待配置（联系客服）</a>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px">
         <div style="flex:1;min-width:150px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:12px">
           <div style="font-size:13px;font-weight:600;margin-bottom:8px">微信支付（国内）</div>
           <img src="pay_wechat.png" alt="微信收款码" style="width:150px;height:auto;border-radius:6px">
           <div style="color:var(--muted);font-size:12px;margin-top:6px">微信扫码付款</div>
         </div>
         <div style="flex:1;min-width:150px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:12px">
-          <div style="font-size:13px;font-weight:600;margin-bottom:8px">支付宝（国内）</div>
-          <div style="font-size:24px">🔵</div>
-          <div id="pay-alipay" style="color:var(--muted);font-size:12px;margin-top:6px">待插入收款码</div>
-        </div>
-        <div style="flex:1;min-width:150px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:12px">
           <div style="font-size:13px;font-weight:600;margin-bottom:8px">海外付款 · International</div>
           <div style="font-size:24px">💳</div>
-          <div style="color:var(--muted);font-size:12px;margin-top:6px">Credit / Master / Debit / PayPal</div>
-          <a id="pay-overseas" href="https://buy.stripe.com/6oU3cv4W0366aKkfgLgw000?locale=en" target="_blank" style="color:var(--blue);font-size:13px;font-weight:600">Pay now · 点击付款 →</a>
+          <div style="color:var(--muted);font-size:12px;margin-top:6px">信用卡 | 万事达 | 银行卡 | PayPal</div>
+          <a id="pay-overseas" href="https://buy.stripe.com/6oU3cv4W0366aKkfgLgw000?locale=en" target="_blank" style="color:var(--blue);font-size:13px;font-weight:600">点击付款 →</a>
         </div>
       </div>
+      <p style="color:var(--muted);font-size:12px;margin:14px 0 0">付款后自动开通，无人工干预。</p>
     </div>
   </section>
 
   <div class="foot">
-    ⚠️ 数据来自公开接口与公开 RSS，规则自动打标、未人工核实，不构成任何投资建议；转售需自行核对各来源服务条款。<br>
-    信号 API · 2026
+    数据来自公开接口与公开 RSS，规则自动打标、未人工核实，不构成任何投资建议；转售需自行核对各来源服务条款。<br>
+    Signals API · 2026
   </div>
 </div>
 </body>
