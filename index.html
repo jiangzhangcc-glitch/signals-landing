@@ -56,7 +56,12 @@
   .pay-tier .tier-name { font-size:14px; font-weight:700; }
   .pay-tier .tier-price { font-size:18px; font-weight:700; color:var(--blue); margin:4px 0; }
   .pay-tier a { display:inline-block; margin-top:6px; text-decoration:none; font-weight:600; font-size:13px; color:#fff; background:var(--blue); padding:6px 16px; border-radius:6px; }
-  @media (max-width:760px) { .grid,.grid2,.grid3,.features-grid,.delivery-grid { grid-template-columns:1fr; } .hero h2 { font-size:26px; } #pricing table { width:100%; } .wrap { max-width:92%; } }
+  .api-row { display:flex; gap:16px; align-items:flex-start; justify-content:center; }
+  .api-panel { flex:1 1 auto; max-width:520px; background:#0d1117; color:#c9d1d9; border-radius:8px; overflow:hidden; }
+  .api-head { display:flex; justify-content:space-between; align-items:center; padding:8px 14px; background:#161b22; color:#8b949e; font-size:12px; border-bottom:1px solid #30363d; }
+  .api-body { padding:14px 16px; font-family:Consolas,monospace; font-size:12px; line-height:1.7; white-space:pre; overflow:auto; max-height:220px; }
+  .api-body .cm { color:#8b949e; }
+  @media (max-width:760px) { .grid,.grid2,.grid3,.features-grid,.delivery-grid { grid-template-columns:1fr; } .hero h2 { font-size:26px; } #pricing table { width:100%; } .wrap { max-width:92%; } .api-row { flex-direction:column; align-items:center; } .api-panel { max-width:100%; width:100%; } }
 </style>
 </head>
 <body>
@@ -116,40 +121,39 @@
   <section id="demo">
     <h3>实时演示</h3>
     <p class="sub">👇 在线体验（真实采集数据，无需安装）｜本地部署后功能更全（含历史档案查询）</p>
-    <p style="text-align:center;margin:10px 0 18px">
-      <a class="btn btn-primary" href="https://jiangzhangcc-glitch.github.io/signals-api-demo/" target="_blank">🎯 打开在线演示看板</a>
-      <a class="btn btn-ghost" href="javascript:void(0)" onclick="togglePanel('api-panel', this)">🔧 开发者 API 流程</a>
-    </p>
+    <div class="api-row">
+      <div style="text-align:center;margin:10px 0 18px;flex:0 0 auto">
+        <a class="btn btn-primary" href="https://jiangzhangcc-glitch.github.io/signals-api-demo/" target="_blank">🎯 打开在线演示看板</a>
+        <br>
+        <a class="btn btn-ghost" href="javascript:void(0)" onclick="toggleApi(this)">🔧 开发者 API 流程</a>
+      </div>
+      <div id="api-panel" class="api-panel" style="display:none">
+        <div class="api-head">
+          <span>开发者 API · 标准 JSON 接口</span>
+          <button type="button" onclick="copyApi()" style="padding:4px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer;font-size:12px">📋 复制</button>
+        </div>
+        <div class="api-body" id="api-body"><span class="cm"># 今日 OpenAI 相关信号（Top 5）</span>
+$ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"
+{
+  "count": 5,
+  "signals": [
+    { "signal_type": "model", "title": "Qwen3.8-Flash-Next",
+      "url": "https://huggingface.co/...", "summary": "..." },
+    ...
+  ]
+}
+---
+GET /api/signals · /api/signals/stats · /api/signals/{id}
+历史: /api/archive?date= · /api/archive/days
+参数: company / topic / source / signal_type / since / limit
+导出: JSON / CSV 全量历史，一键下载
+        </div>
+      </div>
+    </div>
     <p style="margin-top:14px;color:var(--muted);font-size:13px">
       <span class="badge b-blue">看板</span>浏览器打开即用的可视化面板，支持筛选与历史回查
       <span class="badge b-green">API</span>/health /api/signals /api/archive 全部端点
       <span class="badge b-orange">导出</span>历史全量 JSON / CSV 一键导出
-    </p>
-  </section>
-
-  <section id="api-panel" style="display:none">
-    <h3>开发者 API · 直接对接你的流程</h3>
-    <p class="sub">标准 JSON 接口，字段稳定、格式统一，可编程调用——这就是名字里"API"三个字的意义。</p>
-    <div class="demo" style="font-size:12px">
-<span class="cm"># 今日 OpenAI 相关信号（Top 5）</span><br>
-$ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"<br>
-{<br>
-&nbsp;&nbsp;"count": 5,<br>
-&nbsp;&nbsp;"signals": [<br>
-&nbsp;&nbsp;&nbsp;&nbsp;{ "signal_type": "model", "title": "Qwen3.8-Flash-Next",<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url": "https://huggingface.co/...", "summary": "..." },<br>
-&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-&nbsp;&nbsp;]<br>
-}
-    </div>
-    <p style="margin-top:14px;color:var(--muted);font-size:13px">
-      <span class="badge b-gray">GET</span>/api/signals&nbsp; · &nbsp;/api/signals/stats&nbsp; · &nbsp;/api/signals/{id}
-      <br>
-      <span class="badge b-gray">历史</span>/api/archive?date=&nbsp; · &nbsp;/api/archive/days
-      <br>
-      <span class="badge b-gray">参数</span>company / topic / source / signal_type / since / limit
-      <br>
-      <span class="badge b-orange">导出</span>JSON / CSV 全量历史，一键下载
     </p>
   </section>
 
@@ -192,19 +196,11 @@ $ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"<br>
       </tr>
     </table>
     <p style="margin-top:18px;text-align:center">
-      <a class="btn btn-ghost" href="javascript:void(0)" onclick="togglePanel('pay-panel', this)">其他付款方式（微信）</a>
+      <a class="btn btn-ghost" href="javascript:void(0)" onclick="togglePanel('pay-panel', this)">微信付款方式</a>
     </p>
-    <div id="pay-panel" style="display:none;max-width:600px;margin:16px auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px">
-      <h4 style="margin:0 0 6px;font-size:16px">💰 其他付款方式</h4>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 14px">订阅请用上方表格中的「点击付款」；以下为微信支付通道。</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <div style="flex:1;min-width:150px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:12px">
-          <div style="font-size:13px;font-weight:600;margin-bottom:8px">微信支付（国内）</div>
-          <img src="pay_wechat.png" alt="微信收款码" style="width:150px;height:auto;border-radius:6px">
-          <div style="color:var(--muted);font-size:12px;margin-top:6px">微信扫码付款</div>
-        </div>
-      </div>
-      <p style="color:var(--muted);font-size:12px;margin:14px 0 0">付款后自动开通，无人工干预。</p>
+    <div id="pay-panel" style="display:none;max-width:600px;margin:16px auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;text-align:center">
+      <img src="pay_wechat.png" alt="微信收款码" style="width:200px;height:auto;border-radius:6px">
+      <p style="color:var(--text);font-size:14px;margin:14px 0 0">微信扫码付款，付款后自动开通</p>
     </div>
   </section>
 
@@ -218,7 +214,30 @@ function togglePanel(id, btn) {
   var p = document.getElementById(id);
   var hidden = p.style.display === 'none' || !p.style.display;
   p.style.display = hidden ? 'block' : 'none';
-  if (btn) btn.textContent = hidden ? btn.textContent.replace('（微信）', '（收起）').replace('(WeChat)', '(collapse)') : btn.textContent.replace('（收起）', '（微信）').replace('(collapse)', '(WeChat)');
+  if (btn) btn.textContent = hidden ? btn.textContent.replace('微信付款方式', '微信付款方式（收起）').replace('(WeChat)', '(collapse)') : btn.textContent.replace('微信付款方式（收起）', '微信付款方式').replace('(collapse)', '(WeChat)');
+}
+function toggleApi(btn) {
+  var p = document.getElementById('api-panel');
+  var hidden = p.style.display === 'none' || !p.style.display;
+  p.style.display = hidden ? 'block' : 'none';
+  if (btn) btn.textContent = hidden ? '🔧 开发者 API 流程（收起）' : '🔧 开发者 API 流程';
+}
+function copyApi() {
+  var body = document.getElementById('api-body');
+  var text = body.innerText;
+  var btn = document.querySelector('.api-head button');
+  var ok = false;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function(){ ok = true; }).catch(function(){});
+  }
+  if (!ok) {
+    var ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { ok = document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+  btn.textContent = ok ? '✅ 已复制' : '复制失败';
+  setTimeout(function(){ btn.textContent = '📋 复制'; }, 2000);
 }
 </script>
 </body>
