@@ -62,7 +62,6 @@
 <body>
 <header>
   <h1>📡 Signals API</h1>
-  <span style="color:var(--muted);font-size:13px">AI 信号台 · 每天 4 个信息源自动汇总</span>
   <div class="lang-switch">
     <a href="https://signals.jiangzhang.ca/" class="active">中文</a>
     <a href="https://jiangzhangcc-glitch.github.io/signals-landing-en/">EN</a>
@@ -119,7 +118,7 @@
     <p class="sub">👇 在线体验（真实采集数据，无需安装）｜本地部署后功能更全（含历史档案查询）</p>
     <p style="text-align:center;margin:10px 0 18px">
       <a class="btn btn-primary" href="https://jiangzhangcc-glitch.github.io/signals-api-demo/" target="_blank">🎯 打开在线演示看板</a>
-      <a class="btn btn-ghost" href="javascript:void(0)" onclick="document.getElementById('api-panel').style.display='block';this.style.display='none'">🔧 开发者 API 流程</a>
+      <a class="btn btn-ghost" href="javascript:void(0)" onclick="togglePanel('api-panel', this)">🔧 开发者 API 流程</a>
     </p>
     <p style="margin-top:14px;color:var(--muted);font-size:13px">
       <span class="badge b-blue">看板</span>浏览器打开即用的可视化面板，支持筛选与历史回查
@@ -128,7 +127,7 @@
     </p>
   </section>
 
-  <section id="api" style="display:none">
+  <section id="api-panel" style="display:none">
     <h3>开发者 API · 直接对接你的流程</h3>
     <p class="sub">标准 JSON 接口，字段稳定、格式统一，可编程调用——这就是名字里"API"三个字的意义。</p>
     <div class="demo" style="font-size:12px">
@@ -161,11 +160,11 @@ $ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"<br>
       <summary>A. 托管服务</summary>
       <div class="d-body">我方部署运行，给你 HTTP 接口地址，零运维。你只需要拿到接口地址和访问凭据，数据采集、服务更新、可用性维护都由我方负责，适合不想碰代码、只想直接用数据的买家。</div>
     </details>
-    <details class="delivery">
+    <details class="delivery" open>
       <summary>B. 本地部署</summary>
       <div class="d-body">整套源码 + 脚本，数据完全在你机器上。我们交付完整代码与一键启动脚本（数据采集、API 服务、可视化看板），你部署在自己服务器上，数据不出你的网络，适合有 IT 能力、对数据主权有要求的团队。</div>
     </details>
-    <details class="delivery">
+    <details class="delivery" open>
       <summary>C. 一次性数据包</summary>
       <div class="d-body">历史全量 JSON/CSV 一次买断，无后续服务。适合只需要历史数据做离线分析、不需要实时订阅的买家。交付后数据归你所有，可永久使用。</div>
     </details>
@@ -181,7 +180,7 @@ $ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"<br>
     <h3>订阅方案</h3>
     <table>
       <tr><th></th><th>基础版</th><th class="hot">标准版</th><th>年度版</th></tr>
-      <tr><td><b>价格</b></td><td><span class="price">CA$15</span>/月</td><td class="hot"><span class="price">CA$40</span>/月</td><td><span class="price">CA$299</span>/年</td></tr>
+      <tr><td><b>价格</b></td><td><span class="price">CA$9.9</span>/月</td><td class="hot"><span class="price">CA$29.9</span>/月</td><td><span class="price">CA$299</span>/年</td></tr>
       <tr><td>数据范围</td><td>当日推送</td><td class="hot">当日推送 + 历史档案</td><td>当日推送 + 历史档案 + 年全量历史导出</td></tr>
       <tr><td>接口</td><td>/api/signals</td><td class="hot">全部端点</td><td>全部端点 + 原始导出</td></tr>
       <tr><td>历史查询</td><td>—</td><td class="hot">✅ /api/archive</td><td>✅ + 离线文件</td></tr>
@@ -193,22 +192,16 @@ $ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"<br>
       </tr>
     </table>
     <p style="margin-top:18px;text-align:center">
-      <a class="btn btn-ghost" href="javascript:void(0)" onclick="document.getElementById('pay-panel').style.display='block';this.style.display='none'">其他付款方式（微信）</a>
+      <a class="btn btn-ghost" href="javascript:void(0)" onclick="togglePanel('pay-panel', this)">其他付款方式（微信）</a>
     </p>
     <div id="pay-panel" style="display:none;max-width:600px;margin:16px auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px">
       <h4 style="margin:0 0 6px;font-size:16px">💰 其他付款方式</h4>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 14px">订阅请用上方表格中的「点击付款」；以下为微信支付与海外卡通道。</p>
+      <p style="color:var(--muted);font-size:12px;margin:0 0 14px">订阅请用上方表格中的「点击付款」；以下为微信支付通道。</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
         <div style="flex:1;min-width:150px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:12px">
           <div style="font-size:13px;font-weight:600;margin-bottom:8px">微信支付（国内）</div>
           <img src="pay_wechat.png" alt="微信收款码" style="width:150px;height:auto;border-radius:6px">
           <div style="color:var(--muted);font-size:12px;margin-top:6px">微信扫码付款</div>
-        </div>
-        <div style="flex:1;min-width:150px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:12px">
-          <div style="font-size:13px;font-weight:600;margin-bottom:8px">海外付款 · International</div>
-          <div style="font-size:24px">💳</div>
-          <div style="color:var(--muted);font-size:12px;margin-top:6px">信用卡 | 万事达 | 银行卡 | PayPal</div>
-          <a id="pay-overseas" href="https://buy.stripe.com/6oU3cv4W0366aKkfgLgw000?locale=en" target="_blank" style="color:var(--blue);font-size:13px;font-weight:600">点击付款 →</a>
         </div>
       </div>
       <p style="color:var(--muted);font-size:12px;margin:14px 0 0">付款后自动开通，无人工干预。</p>
@@ -220,5 +213,13 @@ $ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"<br>
     Signals API · 2026
   </div>
 </div>
+<script>
+function togglePanel(id, btn) {
+  var p = document.getElementById(id);
+  var hidden = p.style.display === 'none' || !p.style.display;
+  p.style.display = hidden ? 'block' : 'none';
+  if (btn) btn.textContent = hidden ? btn.textContent.replace('（微信）', '（收起）').replace('(WeChat)', '(collapse)') : btn.textContent.replace('（收起）', '（微信）').replace('(collapse)', '(WeChat)');
+}
+</script>
 </body>
 </html>
