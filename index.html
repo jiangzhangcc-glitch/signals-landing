@@ -10,7 +10,7 @@
   body { font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; margin:0; background:var(--bg); color:var(--text); line-height:1.7; }
   header { background:#fff; border-bottom:1px solid var(--line); padding:14px 20px; display:flex; align-items:center; gap:12px; }
   header h1 { font-size:18px; margin:0; }
-  .wrap { max-width:920px; margin:0 auto; padding:0 20px; }
+  .wrap { max-width:75%; margin:0 auto; padding:0 20px; }
   .hero { text-align:center; padding:64px 20px 48px; background:linear-gradient(180deg,#fff 0%,#f6f8fa 100%); }
   .hero h2 { font-size:34px; margin:0 0 14px; }
   .hero p { color:var(--muted); font-size:16px; max-width:680px; margin:0 auto 26px; }
@@ -28,9 +28,10 @@
   .card { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px; }
   .card h4 { margin:0 0 8px; font-size:16px; }
   .card p { margin:0; color:var(--muted); font-size:13px; }
-  .feature { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:22px 24px; margin:14px 0; }
+  .feature { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:22px 24px; }
   .feature h4 { margin:0 0 10px; font-size:17px; }
   .feature p { margin:0; color:var(--text); font-size:14px; }
+  .features-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
   .badge { display:inline-block; border-radius:10px; font-size:11px; padding:1px 8px; margin-right:6px; }
   .b-blue { background:#ddf4ff; color:var(--blue); } .b-green { background:#dafbe1; color:var(--green); }
   .b-orange { background:#fff1d6; color:var(--orange); } .b-gray { background:#f0f0f0; color:#444; }
@@ -45,16 +46,17 @@
   .lang-switch { margin-left:auto; display:flex; gap:6px; align-items:center; }
   .lang-switch a { text-decoration:none; font-size:13px; font-weight:600; padding:4px 10px; border-radius:6px; border:1px solid var(--line); color:var(--muted); background:#fff; }
   .lang-switch a.active { background:var(--blue); color:#fff; border-color:var(--blue); }
-  details.delivery { background:var(--card); border:1px solid var(--line); border-radius:8px; margin:10px 0; }
+  details.delivery { background:var(--card); border:1px solid var(--line); border-radius:8px; }
   details.delivery summary { cursor:pointer; padding:16px 20px; font-weight:600; font-size:15px; list-style:none; }
   details.delivery summary::before { content:"▸ "; color:var(--blue); }
   details.delivery[open] summary::before { content:"▾ "; }
   details.delivery .d-body { padding:0 20px 18px; color:var(--muted); font-size:14px; }
+  .delivery-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; align-items:start; }
   .pay-tier { border:1px solid var(--line); border-radius:8px; padding:14px; text-align:center; margin:8px 0; }
   .pay-tier .tier-name { font-size:14px; font-weight:700; }
   .pay-tier .tier-price { font-size:18px; font-weight:700; color:var(--blue); margin:4px 0; }
   .pay-tier a { display:inline-block; margin-top:6px; text-decoration:none; font-weight:600; font-size:13px; color:#fff; background:var(--blue); padding:6px 16px; border-radius:6px; }
-  @media (max-width:760px) { .grid,.grid2,.grid3 { grid-template-columns:1fr; } .hero h2 { font-size:26px; } #pricing table { width:100%; } }
+  @media (max-width:760px) { .grid,.grid2,.grid3,.features-grid,.delivery-grid { grid-template-columns:1fr; } .hero h2 { font-size:26px; } #pricing table { width:100%; } .wrap { max-width:92%; } }
 </style>
 </head>
 <body>
@@ -89,7 +91,7 @@
   <section>
     <h3>四个亮点</h3>
     <p class="sub">AI 圈 24 小时内发生什么？时空维度在哪里？信号是否真实可靠？数据资产价值连城？人机皆可读？</p>
-
+    <div class="features-grid">
     <div class="feature">
       <h4>🔗 溯源 · 信号是否真实可靠？</h4>
       <p>AI 圈每天产生海量信息，但大部分内容经二手转述、标题党加工后，真假难辨。Signals API 的第一原则是：每条信号都能回到源头。我们抓取的是 GitHub 仓库主页、HuggingFace 模型卡片、YouTube 原视频和硅谷原始资讯——每条信号自带原始 URL、发布时间和发布者，你想核实，点一下就到原页面，不经过任何中间解释。为什么这很重要？在 AI 这个信息失真率极高的领域，"谁说的"和"原始出处"就是价值的锚点。你可以用发布时间判断信息新鲜度，用发布者判断可信度，用原始链接做二次研究。对研究员来说，可溯源意味着每一份引用都有据可查；对投资者来说，可溯源意味着决策依据经得起追问；对内容创作者来说，可溯源意味着你的选题可以放心引用。我们不生产观点，只搬运可验证的事实，并把"回到源头"做成产品的默认行为。</p>
@@ -109,6 +111,7 @@
       <h4>🤖 机器可读 · 数据资产价值连城？人机皆可读？</h4>
       <p>信息产品分两种：给人看的，和给机器读的。Signals API 两者都要——既有可视化看板给人看，更提供 JSON API 和 CSV/JSON 导出给机器读。为什么机器可读是刚需？因为真实的工作流里，"人"不应该是唯一的消费者：量化团队要把信号喂进模型，研究员要把数据导入分析工具，内容团队要批量抓取选题，创业者要监控竞对动态——这些场景都需要结构化数据，而不是截图。我们的 API 提供按公司、主题、来源、类型、时间过滤的查询端点，数据以标准 JSON 返回，字段稳定、格式统一，可以直接对接你的代码。历史档案支持按日期批量拉取，一次导出即可离线分析。对人，我们有看板；对机器，我们有 API；对流程，我们有导出。人机皆可读，才是真正的"数据资产"。</p>
     </div>
+    </div>
   </section>
 
   <section id="demo">
@@ -116,6 +119,7 @@
     <p class="sub">👇 在线体验（真实采集数据，无需安装）｜本地部署后功能更全（含历史档案查询）</p>
     <p style="text-align:center;margin:10px 0 18px">
       <a class="btn btn-primary" href="https://jiangzhangcc-glitch.github.io/signals-api-demo/" target="_blank">🎯 打开在线演示看板</a>
+      <a class="btn btn-ghost" href="javascript:void(0)" onclick="document.getElementById('api-panel').style.display='block';this.style.display='none'">🔧 开发者 API 流程</a>
     </p>
     <p style="margin-top:14px;color:var(--muted);font-size:13px">
       <span class="badge b-blue">看板</span>浏览器打开即用的可视化面板，支持筛选与历史回查
@@ -124,7 +128,7 @@
     </p>
   </section>
 
-  <section id="api">
+  <section id="api" style="display:none">
     <h3>开发者 API · 直接对接你的流程</h3>
     <p class="sub">标准 JSON 接口，字段稳定、格式统一，可编程调用——这就是名字里"API"三个字的意义。</p>
     <div class="demo" style="font-size:12px">
@@ -152,6 +156,7 @@ $ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"<br>
 
   <section>
     <h3>交付形态</h3>
+    <div class="delivery-grid">
     <details class="delivery" open>
       <summary>A. 托管服务</summary>
       <div class="d-body">我方部署运行，给你 HTTP 接口地址，零运维。你只需要拿到接口地址和访问凭据，数据采集、服务更新、可用性维护都由我方负责，适合不想碰代码、只想直接用数据的买家。</div>
@@ -164,6 +169,7 @@ $ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"<br>
       <summary>C. 一次性数据包</summary>
       <div class="d-body">历史全量 JSON/CSV 一次买断，无后续服务。适合只需要历史数据做离线分析、不需要实时订阅的买家。交付后数据归你所有，可永久使用。</div>
     </details>
+    </div>
   </section>
 
   <section id="contact">
@@ -187,7 +193,7 @@ $ curl "https://signals.jiangzhang.ca/api/signals?company=OpenAI&limit=5"<br>
       </tr>
     </table>
     <p style="margin-top:18px;text-align:center">
-      <a class="btn btn-ghost" href="javascript:void(0)" onclick="document.getElementById('pay-panel').style.display='block';this.style.display='none'">其他付款方式（微信 · 海外卡）</a>
+      <a class="btn btn-ghost" href="javascript:void(0)" onclick="document.getElementById('pay-panel').style.display='block';this.style.display='none'">其他付款方式（微信）</a>
     </p>
     <div id="pay-panel" style="display:none;max-width:600px;margin:16px auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px">
       <h4 style="margin:0 0 6px;font-size:16px">💰 其他付款方式</h4>
