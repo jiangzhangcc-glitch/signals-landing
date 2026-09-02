@@ -113,7 +113,7 @@
 
     <div class="feature">
       <h4>🤖 为什么要人机皆可读？</h4>
-      <p><b>API = 应用编程接口（Application Programming Interface）</b>——简单说，就是让你的程序能直接调用的数据入口。信息产品分两种：给人看的，和给机器读的。Signals API 两者都要——既有可视化看板给人看，更提供 JSON API 和 CSV/JSON 导出给机器读。为什么机器可读是刚需？因为真实的工作流里，"人"不应该是唯一的消费者：量化团队要把信号喂进模型，研究员要把数据导入分析工具，内容团队要批量抓取选题，创业者要监控竞对动态——这些场景都需要结构化数据，而不是截图。我们的 API 提供按公司、主题、来源、类型、时间过滤的查询端点，数据以标准 JSON 返回，字段稳定、格式统一，可以直接对接你的代码。历史档案支持按日期批量拉取，一次导出即可离线分析。对人，我们有看板；对机器，我们有 API；对流程，我们有导出。人机皆可读，才是真正的"数据资产"。</p>
+      <p><b>API = 应用编程接口（Application Programming Interface）</b>——简单说，就是让你的程序能直接调用的数据入口。信息产品分两种：给人看的，和给机器读的。Signals API 两者都要——既有可视化信号台给人看，更提供 JSON API 和 CSV/JSON 导出给机器读。为什么机器可读是刚需？因为真实的工作流里，"人"不应该是唯一的消费者：量化团队要把信号喂进模型，研究员要把数据导入分析工具，内容团队要批量抓取选题，创业者要监控竞对动态——这些场景都需要结构化数据，而不是截图。我们的 API 提供按公司、主题、来源、类型、时间过滤的查询端点，数据以标准 JSON 返回，字段稳定、格式统一，可以直接对接你的代码。历史档案支持按日期批量拉取，一次导出即可离线分析。对人，我们有信号台；对机器，我们有 API；对流程，我们有导出。人机皆可读，才是真正的"数据资产"。</p>
     </div>
     </div>
   </section>
@@ -129,9 +129,9 @@
     <table>
       <tr><th></th><th>BASIC</th><th class="hot">PLUS</th><th>BUSINESS</th></tr>
       <tr><td><b>价格</b></td><td><span class="price">CA$9.9</span>/月</td><td class="hot"><span class="price">CA$29.9</span>/月</td><td><span class="price">CA$129.9</span>/月</td></tr>
-      <tr><td>看板</td><td>✅ 看板</td><td class="hot">✅ Basic + 推送[方式/时间]设置</td><td>✅ Plus + 推送[内容/数量]定制</td></tr><tr><td>推送</td><td>✅ 晨间 1 档（邮件）· 核心四源 Top3</td><td class="hot">✅ 每日 4 档（邮件）· 全部 8 源 Top3</td><td>✅ 每日 4 档双通道（邮件+浏览器）· 内容 Top3~10 可定制</td></tr>
+      <tr><td>信号台</td><td>✅ 信号台</td><td class="hot">✅ Basic + 推送[方式/时间]设置</td><td>✅ Plus + 推送[内容/数量]定制</td></tr><tr><td>推送</td><td>✅ 晨间 1 档（邮件）· 核心四源 Top3</td><td class="hot">✅ 每日 4 档（邮件）· 全部 8 源 Top3</td><td>✅ 每日 4 档双通道（邮件+浏览器）· 内容 Top3~10 可定制</td></tr>
       <tr><td>API 接口</td><td>—</td><td class="hot">✅ 当日 + 统计</td><td>PLUS + 历史 + 导出</td></tr>
-      <tr><td>历史查询</td><td>—</td><td class="hot">✅ 看板回查</td><td>✅ API 查询 + 全量导出</td></tr>
+      <tr><td>历史查询</td><td>—</td><td class="hot">✅ 信号台回查</td><td>✅ API 查询 + 全量导出</td></tr>
       
       <tr><td><b>购买</b></td>
         <td><a href="https://buy.stripe.com/00w14ncoseOO5q03y3gw003?locale=en" target="_blank" style="font-size:18px;color:var(--blue);font-weight:600">点击订阅</a></td>
@@ -151,7 +151,7 @@
   <section id="faq">
     <h3>常见问题（FAQ）</h3>
     <div class="grid2" style="gap:10px">
-      <details class="delivery"><summary>如何开始？</summary><div class="d-body">在「订阅方案」中点击对应档位的支付链接，付款后系统自动向您的邮箱发送看板链接、API Key 与数据附件；订阅后，推送默认在下一次最近整点开始，如有特殊推送需求，可在看板中设置定制推送。</div></details>
+      <details class="delivery"><summary>如何开始？</summary><div class="d-body">在「订阅方案」中点击对应档位的支付链接，付款后系统自动向您的邮箱发送信号台链接、API Key 与数据附件；订阅后，推送默认在下一次最近整点开始，如有特殊推送需求，可在信号台中设置定制推送。</div></details>
       <details class="delivery"><summary>数据来自哪里？可信吗？</summary><div class="d-body">全部来自公开接口与公开 RSS（GitHub / Hugging Face / YouTube / ArXiv / LMSYS Arena / 硅谷资讯等），每条信号带原始链接可溯源；标签由规则自动生成，未经人工逐条核实。</div></details>
       <details class="delivery"><summary>如何取消订阅？退款吗？</summary><div class="d-body">在 Stripe 收据邮件中点击「管理订阅」即可自助取消；按月计费、退订不退款，服务生效至当期订阅周期结束。</div></details>
       <details class="delivery"><summary>这是投资建议吗？</summary><div class="d-body">不是。本服务仅提供信息聚合与溯源，不构成任何投资建议；您基于信号数据做出的决策，风险自担。</div></details>
