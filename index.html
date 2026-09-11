@@ -178,12 +178,13 @@ function togglePanel(id, btn) {
 }
 </script>
 <script>
-// 深浅主题（按钮在语言切换右侧；localStorage signals_theme 记忆，跟随系统偏好）
+// 深浅主题（按钮在语言切换右侧；localStorage signals_theme_zh 记忆，**默认浅色、不跟随系统**）
+// 2026-09-11 owner 要求：默认浅色（与 EN 页口径一致，中英各自独立记忆）
 (function () {
   let th = null;
-  try { th = localStorage.getItem("signals_theme"); } catch (e) {}
+  try { th = localStorage.getItem("signals_theme_zh"); } catch (e) {}
   if (th !== "dark" && th !== "light") {
-    th = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    th = "light";
   }
   function apply() {
     document.documentElement.setAttribute("data-theme", th);
@@ -192,7 +193,7 @@ function togglePanel(id, btn) {
   }
   window.toggleTheme = function () {
     th = th === "dark" ? "light" : "dark";
-    try { localStorage.setItem("signals_theme", th); } catch (e) {}
+    try { localStorage.setItem("signals_theme_zh", th); } catch (e) {}
     apply();
   };
   apply();
